@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Su cuenta ha sido desactivada</title>
+  <style>
+    img {
+      margin: 10px;
+      max-width: 50%;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .link {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <img src="{{ logo_url }}" alt="logo">
+
+  <h2>Su cuenta ha sido desactivada</h2>
+
+  {% if user_name %}
+  <p>Estimado(a) {{ user_name }}:</p>
+  {% else %}
+  <p>Estimado(a) {{ user_email }}:</p>
+  {% endif %}
+
+  <br><br>
+
+  <p>Su contraseña ha sido desactivada exitosamente.</p>
+  <p>Si no realizó esta acción, póngase inmediatamente en contacto con nosotros.</p>
+
+  <br><br>
+
+  <p>Atentamente,</p>
+  <p>El equipo de PICTO.</p>
+</body>
+</html>

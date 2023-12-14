@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activación de cuenta en PICTO</title>
+  <style>
+    img {
+      margin: 10px;
+      max-width: 50%;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .link {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <img src="{{ logo_url }}" alt="logo">
+
+  {% if user_name %}
+  <h2>¡Bienvenido(a) {{ user_name }} a PICTO!</h2>
+  {% else %}
+  <h2>¡Bienvenido(a) {{ user_email }} a PICTO!</h2>
+  {% endif %}
+
+  <br><br>
+
+  <p>Hemos llegado al último paso de tu registro.</p>
+  <p>Por favor, haz clic en el link debajo para activar tu cuenta:</p>
+
+  <br><br>
+
+  <p class="link"><a href="{{ activation_url }}">Activar Cuenta</a></p>
+
+  <br><br>
+
+  <p>Esperamos que tengas una excelente experiencia de usuario en PICTO.</p>
+
+  <br><br>
+
+  <p>Atentamente,</p>
+  <p>El equipo de PICTO.</p>
+</body>
+</html>
