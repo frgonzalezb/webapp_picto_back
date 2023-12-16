@@ -1,6 +1,4 @@
 import os
-import ast
-import json
 
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -21,9 +19,9 @@ load_dotenv(os.path.join(BASE_DIR, '.env.production'))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = ast.literal_eval(os.getenv("DEBUG"))
+DEBUG = eval(os.getenv("DEBUG"))
 
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
+ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS").split(',')]
 
 
 # Application definition
@@ -102,7 +100,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': int(os.getenv('DB_PORT')),
         'OPTIONS': {
-            'autocommit': ast.literal_eval(os.getenv('DB_OPT_AUTOCOMMIT')),
+            'autocommit': eval(os.getenv('DB_OPT_AUTOCOMMIT')),
             'init_command': os.getenv('DB_OPT_INIT_COMMAND')
         }
     }
@@ -155,11 +153,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 # https://pypi.org/project/django-cors-headers/
 
-CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS")]
+CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS").split(',')]
 
-CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_TRUSTED_ORIGINS")]
+CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_TRUSTED_ORIGINS").split(',')]
 
-CORS_ALLOW_CREDENTIALS = ast.literal_eval(os.getenv("CORS_ALLOW_CREDENTIALS"))
+CORS_ALLOW_CREDENTIALS = eval(os.getenv("CORS_ALLOW_CREDENTIALS"))
 
 
 
@@ -175,7 +173,7 @@ REST_FRAMEWORK = {
     'DEFAULT_CACHE_CONTROL_MAX_AGE': int(
         os.getenv('DEFAULT_CACHE_CONTROL_MAX_AGE')
     ),
-    'DEFAULT_CACHE_CONTROL_PUBLIC': ast.literal_eval(
+    'DEFAULT_CACHE_CONTROL_PUBLIC': eval(
         os.getenv('DEFAULT_CACHE_CONTROL_PUBLIC')
     ),
 }
@@ -187,23 +185,23 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": ast.literal_eval(
+    "ROTATE_REFRESH_TOKENS": eval(
         os.getenv('ROTATE_REFRESH_TOKENS')
     ),
-    "BLACKLIST_AFTER_ROTATION": ast.literal_eval(
+    "BLACKLIST_AFTER_ROTATION": eval(
         os.getenv('BLACKLIST_AFTER_ROTATION')
     ),
-    "UPDATE_LAST_LOGIN": ast.literal_eval(
+    "UPDATE_LAST_LOGIN": eval(
         os.getenv('UPDATE_LAST_LOGIN')
     ),
 
     "ALGORITHM": os.getenv('ALGORITHM'),
     "SIGNING_KEY": os.getenv("SECRET_KEY"),
     "VERIFYING_KEY": os.getenv('VERIFYING_KEY'),
-    "AUDIENCE": ast.literal_eval(os.getenv('AUDIENCE')),
-    "ISSUER": ast.literal_eval(os.getenv('ISSUER')),
-    "JSON_ENCODER": ast.literal_eval(os.getenv('JSON_ENCODER')),
-    "JWK_URL": ast.literal_eval(os.getenv('JWK_URL')),
+    "AUDIENCE": eval(os.getenv('AUDIENCE')),
+    "ISSUER": eval(os.getenv('ISSUER')),
+    "JSON_ENCODER": eval(os.getenv('JSON_ENCODER')),
+    "JWK_URL": eval(os.getenv('JWK_URL')),
     "LEEWAY": int(os.getenv('LEEWAY')),
 
     "AUTH_HEADER_TYPES": ("Bearer",),
@@ -240,7 +238,7 @@ EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 
 EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
 
-EMAIL_USE_TLS = ast.literal_eval(os.getenv("EMAIL_USE_TLS"))
+EMAIL_USE_TLS = eval(os.getenv("EMAIL_USE_TLS"))
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 
@@ -267,15 +265,15 @@ DRF_RECAPTCHA_SECRET_KEY = os.getenv('DRF_RECAPTCHA_SECRET_KEY')
 
 
 # More Django settings
-CSRF_COOKIE_SECURE = ast.literal_eval(
+CSRF_COOKIE_SECURE = eval(
     os.getenv('CSRF_COOKIE_SECURE')
 )
 
-SESSION_COOKIE_SECURE = ast.literal_eval(
+SESSION_COOKIE_SECURE = eval(
     os.getenv('SESSION_COOKIE_SECURE')
 )
 
-SECURE_SSL_REDIRECT = ast.literal_eval(
+SECURE_SSL_REDIRECT = eval(
     os.getenv('SECURE_SSL_REDIRECT')
 )
 
@@ -283,10 +281,10 @@ SECURE_HSTS_SECONDS = int(
     os.getenv('SECURE_HSTS_SECONDS')
 )
 
-SECURE_HSTS_PRELOAD = ast.literal_eval(
+SECURE_HSTS_PRELOAD = eval(
     os.getenv('SECURE_HSTS_PRELOAD')
 )
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = ast.literal_eval(
+SECURE_HSTS_INCLUDE_SUBDOMAINS = eval(
     os.getenv('SECURE_HSTS_INCLUDE_SUBDOMAINS')
 )
