@@ -1,5 +1,4 @@
 import os
-import ast
 
 from rest_framework_simplejwt.tokens import AccessToken
 
@@ -9,9 +8,9 @@ class CustomAccessToken(AccessToken):
         token = super().get_token(user)
 
         cookie_options = {
-            'httponly': ast.literal_eval(os.getenv('COOKIE_HTTPONLY')),
-            'secure': ast.literal_eval(os.getenv('COOKIE_SECURE')),
-            'samesite': ast.literal_eval(os.getenv('COOKIE_SAMESITE')),
+            'httponly': eval(os.getenv('COOKIE_HTTPONLY')),
+            'secure': eval(os.getenv('COOKIE_SECURE')),
+            'samesite': eval(os.getenv('COOKIE_SAMESITE')),
             'max-age': int(os.getenv('COOKIE_MAX_AGE')),
         }
 
