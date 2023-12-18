@@ -27,6 +27,7 @@ class UserStorageView(APIView):
         
         storage_limit = user.storage_limit
         used_storage = get_used_storage(user.id)
+        print(f'used_storage = {used_storage}')
         remaining_storage = max(0, storage_limit - used_storage)
 
         data = {
