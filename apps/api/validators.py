@@ -15,10 +15,19 @@ class DNSBLVerifier():
     async def verify_email(self, email_address):
         domain = email_address.split('@')[1]
         checker = pydnsbl.DNSBLDomainChecker()
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, checker.check, domain)
+        result = await asyncio.to_thread(checker.check, domain)
         
         return result
+
+
+async def verify_email_is_blacklisted(value):
+    verifier = DNSBLVerifier()
+    is_blacklisted = await verifier.verify_email(value)
+    
+    if '[BLACKLISTED]' in str(is_blacklisted):
+        raise ValidationError('Dominio de email en lista negra.')
+
+    return value
 
 
 def verify_email_complexity(value):
@@ -26,16 +35,6 @@ def verify_email_complexity(value):
 
     if not email_regex.match(value):
         raise ValidationError('Formato de email inválido.')
-
-    return value
-
-
-def verify_email_is_blacklisted(value):
-    verifier = DNSBLVerifier()
-    is_blacklisted = asyncio.run(verifier.verify_email(value))
-    
-    if '[BLACKLISTED]' in str(is_blacklisted):
-        raise ValidationError('Dominio de email en lista negra.')
 
     return value
 

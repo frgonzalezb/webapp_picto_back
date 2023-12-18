@@ -21,9 +21,9 @@ def user_created(sender, instance, created, **kwargs):
 
 
 def send_activation_email(user, token):
-    base_url = os.getenv('FRONTEND_BASE_URL')
-    endpoint = os.getenv('ACTIVATION_ENDPOINT')
-    contact_email = os.getenv('CONTACT_EMAIL')
+    base_url = os.environ['BASE_URL']
+    endpoint = os.environ['ACTIVATION_ENDPOINT']
+    contact_email = os.environ['CONTACT_EMAIL']
     logo_url = 'https://i.imgur.com/NF0825u.png'
 
     context = {
@@ -76,10 +76,10 @@ def password_reset_token_created(
     :param kwargs:
     :return:
     """
-    base_url = os.getenv('FRONTEND_BASE_URL')
-    endpoint = os.getenv('PASSWORD_RESET_ENDPOINT')
-    contact_email = os.getenv('CONTACT_EMAIL')
-    logo_url = logo_url = 'https://i.imgur.com/NF0825u.png'
+    base_url = os.environ['BASE_URL']
+    endpoint = os.environ['PASSWORD_RESET_ENDPOINT']
+    contact_email = os.environ['CONTACT_EMAIL']
+    logo_url = 'https://i.imgur.com/NF0825u.png'
 
     context = {
         'current_user': reset_password_token.user,
@@ -118,7 +118,7 @@ def send_password_change_email(sender, instance, **kwargs):
         original_user = User.objects.get(pk=instance.pk)
         if instance.password != original_user.password:
             # La contraseña del usuario ha sido modificada
-            contact_email = os.getenv('CONTACT_EMAIL')
+            contact_email = os.environ['CONTACT_EMAIL']
             logo_url = 'https://i.imgur.com/NF0825u.png'
 
             context = {
@@ -155,7 +155,7 @@ def send_user_deactivation_email(sender, instance, **kwargs):
         original_user = User.objects.get(pk=instance.pk)
         if original_user.is_active and not instance.is_active:
             # El usuario se ha desactivado
-            contact_email = os.getenv('CONTACT_EMAIL')
+            contact_email = os.environ['CONTACT_EMAIL']
             logo_url = 'https://i.imgur.com/NF0825u.png'
 
             context = {
@@ -190,7 +190,7 @@ def send_user_deactivation_email(sender, instance, **kwargs):
 def send_user_signout_email(sender, instance, **kwargs):
     # Verifica si la contraseña ha sido modificada
     if instance.password != kwargs['raw']:
-        contact_email = os.getenv('CONTACT_EMAIL')
+        contact_email = os.environ['CONTACT_EMAIL']
         logo_url = 'https://i.imgur.com/NF0825u.png'
 
         context = {
@@ -219,16 +219,3 @@ def send_user_signout_email(sender, instance, **kwargs):
         
         msg.attach_alternative(email_html_message, "text/html")
         msg.send()
-
-
-'''
-@receiver(pre_delete, sender=User)
-def send_goodbye_email(sender, instance, **kwargs):
-    subject = 'Despedida de nuestro servicio'
-    message = 'Su cuenta ha sido desactivada con éxito. Esperamos tu pronto regreso.'
-    from_email = os.getenv('CONTACT_EMAIL')
-    to_email = instance.user.email
-
-    send_mail(subject, message, from_email, [to_email])
-'''
-

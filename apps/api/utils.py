@@ -46,11 +46,14 @@ def get_used_storage(user_id):
     '''
     Devuelve el almacenamiento de cada usuario en bytes.
     '''
-    user_folder = f'media/user_content/{user_id}/'
+    media_root = settings.MEDIA_ROOT
+    user_folder = f'user_content/{user_id}/'
+    storage_path = os.path.join(media_root, user_folder)
+    print(f'storage_path = {storage_path}')
     total_size = 0
 
     try:
-        for dirpath, dirnames, filenames in os.walk(user_folder):
+        for dirpath, dirnames, filenames in os.walk(storage_path):
             for filename in filenames:
                 filepath = os.path.join(dirpath, filename)
                 total_size += os.path.getsize(filepath)
@@ -402,7 +405,7 @@ def rename_json_file(instance, new_name):
     
     else:
         try:
-            old_path = os.path.join(settings.MEDIA_ROOT + '\\' + rel_path)
+            old_path = os.path.join(settings.MEDIA_ROOT + '/' + rel_path)
 
             if os.path.exists(old_path):
                 rel_path.close()
@@ -425,7 +428,7 @@ def rename_json_file(instance, new_name):
 def remove_json_file(instance):
     try:
         rel_path = instance.json_rutina
-        abs_path = os.path.join(settings.MEDIA_ROOT + '\\' + rel_path)
+        abs_path = os.path.join(settings.MEDIA_ROOT + '/' + rel_path)
 
         if os.path.exists(abs_path):
             os.remove(abs_path)

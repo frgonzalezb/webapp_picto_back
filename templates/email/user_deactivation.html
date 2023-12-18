@@ -7,12 +7,22 @@
   <style>
     img {
       margin: 10px;
-      max-width: 50%;
-      text-align: center;
+      max-width: 25%;
     }
 
     h2 {
       text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .img {
+      display: flex;
+      justify-content: center;
     }
 
     .link {
@@ -21,24 +31,30 @@
   </style>
 </head>
 <body>
-  <img src="cid:logo.png" alt="Logo de PICTO">
+  <div class="container">
+    <div class="img">
+      <img src="{{ logo_url }}" alt="Logo de PICTO">
+    </div>
+    
+    <div class="content">
+      <h2>Su cuenta ha sido desactivada</h2>
 
-  <h2>Su cuenta ha sido desactivada</h2>
+      {% if user_name %}
+      <p>Estimado(a) {{ user_name }}:</p>
+      {% else %}
+      <p>Estimado(a) {{ user_email }}:</p>
+      {% endif %}
 
-  {% if user_name %}
-  <p>Estimado(a) {{ user_name }}:</p>
-  {% else %}
-  <p>Estimado(a) {{ user_email }}:</p>
-  {% endif %}
+      <br><br>
 
-  <br><br>
+      <p>Su contraseña ha sido desactivada exitosamente.</p>
+      <p>Si no realizó esta acción, póngase inmediatamente en contacto con nosotros.</p>
 
-  <p>Su contraseña ha sido desactivada exitosamente.</p>
-  <p>Si no realizó esta acción, póngase inmediatamente en contacto con nosotros.</p>
+      <br><br>
 
-  <br><br>
-
-  <p>Atentamente,</p>
-  <p>El equipo de PICTO.</p>
+      <p>Atentamente,</p>
+      <p>El equipo de PICTO.</p>
+    </div>
+  </div>
 </body>
 </html>

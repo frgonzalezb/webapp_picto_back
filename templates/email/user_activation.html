@@ -7,12 +7,22 @@
   <style>
     img {
       margin: 10px;
-      max-width: 50%;
-      text-align: center;
+      max-width: 25%;
     }
 
     h2 {
       text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .img {
+      display: flex;
+      justify-content: center;
     }
 
     .link {
@@ -21,30 +31,36 @@
   </style>
 </head>
 <body>
-  <img src="cid:logo.png" alt="Logo de PICTO">
+  <div class="container">
+    <div class="img">
+      <img src="{{ logo_url }}" alt="Logo de PICTO">
+    </div>
+    
+    <div class="content">
+      {% if user_name %}
+      <h2>¡Bienvenido(a) {{ user_name }} a PICTO!</h2>
+      {% else %}
+      <h2>¡Bienvenido(a) {{ user_email }} a PICTO!</h2>
+      {% endif %}
 
-  {% if user_name %}
-  <h2>¡Bienvenido(a) {{ user_name }} a PICTO!</h2>
-  {% else %}
-  <h2>¡Bienvenido(a) {{ user_email }} a PICTO!</h2>
-  {% endif %}
+      <br><br>
 
-  <br><br>
+      <p>Hemos llegado al último paso de tu registro.</p>
+      <p>Por favor, haz clic en el link debajo para activar tu cuenta:</p>
 
-  <p>Hemos llegado al último paso de tu registro.</p>
-  <p>Por favor, haz clic en el link debajo para activar tu cuenta:</p>
+      <br><br>
 
-  <br><br>
+      <p class="link"><a href="{{ activation_url }}">Activar Cuenta</a></p>
 
-  <p class="link"><a href="{{ activation_url }}">Activar Cuenta</a></p>
+      <br><br>
 
-  <br><br>
+      <p>Esperamos que tengas una excelente experiencia de usuario en PICTO.</p>
 
-  <p>Esperamos que tengas una excelente experiencia de usuario en PICTO.</p>
+      <br><br>
 
-  <br><br>
-
-  <p>Atentamente,</p>
-  <p>El equipo de PICTO.</p>
+      <p>Atentamente,</p>
+      <p>El equipo de PICTO.</p>
+    </div>
+  </div>
 </body>
 </html>

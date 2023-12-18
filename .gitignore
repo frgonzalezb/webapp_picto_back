@@ -5,10 +5,9 @@
 .venv/
 .vscode/
 **/__pycache__/
-**/migrations/
 
+conf.json
 db.sqlite3
-picto_db.sql
 
 script.py
 

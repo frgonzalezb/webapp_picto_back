@@ -1,6 +1,8 @@
 import os
 import json
 
+from django.conf import settings
+
 from rest_framework import exceptions, status, viewsets
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
@@ -335,10 +337,13 @@ class RutinaViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        json_file_path = os.path.join('media', instance.json_rutina)
+        json_file_path = os.path.join(settings.MEDIA_ROOT, instance.json_rutina)
 
-        with open(json_file_path, 'r') as json_file:
-            json_content = json.load(json_file)
+        try:
+            with open(json_file_path, 'r') as json_file:
+                json_content = json.load(json_file)
+        except:
+            raise exceptions.NotFound('No se ha encontrado el JSON de la rutina.')
 
         serializer = self.get_serializer(instance)
         response_data = serializer.data

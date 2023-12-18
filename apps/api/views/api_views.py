@@ -40,35 +40,42 @@ class UserStorageView(APIView):
 
 class ContactFormView(APIView):
     def post(self, request, *args, **kwargs):
-        contact_email = os.getenv('CONTACT_EMAIL')
+        try:
+            contact_email = os.environ['CONTACT_EMAIL']
 
-        # Serializar y validar datos del formulario
-        serializer = ContactFormSerializer(
-            data=request.data, 
-            context={"request": request}
-        )
-        serializer.is_valid(raise_exception=True)
+            # Serializar y validar datos del formulario
+            serializer = ContactFormSerializer(
+                data=request.data, 
+                context={"request": request}
+            )
+            serializer.is_valid(raise_exception=True)
 
-        validated_data = serializer.validated_data
+            validated_data = serializer.validated_data
 
-        # Obtener datos del formulario
-        nombre = validated_data['nombre']
-        email = validated_data['email']
-        asunto = validated_data['asunto']
-        mensaje = validated_data['mensaje']
+            # Obtener datos del formulario
+            nombre = validated_data['nombre']
+            email = validated_data['email']
+            asunto = validated_data['asunto']
+            mensaje = validated_data['mensaje']
 
-        send_mail(
-            f'Formulario de contacto, asunto: {asunto}',
-            f'Mensaje de: {nombre}\nEmail: {email}\n\nMensaje:\n{mensaje}',
-            email,
-            [contact_email],
-            fail_silently=False,
-        )
+            send_mail(
+                f'Formulario de contacto, asunto: {asunto}',
+                f'Mensaje de: {nombre}\nEmail: {email}\n\nMensaje:\n{mensaje}',
+                email,
+                [contact_email],
+                fail_silently=False,
+            )
 
-        return Response(
-            {'mensaje': 'Formulario enviado correctamente'}, 
-            status=status.HTTP_200_OK
-        )
+            return Response(
+                {'mensaje': 'Formulario enviado correctamente'}, 
+                status=status.HTTP_200_OK
+            )
+        
+        except Exception as e:
+            return Response(
+                {'error': str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
 
 class TermsAndConditionsView(APIView):
@@ -77,7 +84,7 @@ class TermsAndConditionsView(APIView):
             # Ruta al archivo de términos y condiciones
             base_dir = settings.BASE_DIR
             templates_dir = os.path.join(base_dir, 'templates')
-            file_path = f'{templates_dir}\\policy\\terms.txt'
+            file_path = f'{templates_dir}/policy/terms.txt'
 
             # Abre y lee el contenido del archivo
             with open(file_path, 'r') as file:

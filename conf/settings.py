@@ -9,19 +9,19 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environment variables
-load_dotenv(os.path.join(BASE_DIR, '.env.production'))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = eval(os.getenv("DEBUG"))
+DEBUG = eval(os.environ["DEBUG"])
 
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS").split(',')]
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"]
 
 
 # Application definition
@@ -40,7 +40,6 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
-    'django_countries',
     'django_rest_passwordreset',
     'drf_yasg',
     'drf_recaptcha',
@@ -93,16 +92,12 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': int(os.getenv('DB_PORT')),
-        'OPTIONS': {
-            'autocommit': eval(os.getenv('DB_OPT_AUTOCOMMIT')),
-            'init_command': os.getenv('DB_OPT_INIT_COMMAND')
-        }
+        'ENGINE': os.environ['DB_ENGINE'],
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': int(os.environ['DB_PORT']),
     }
 }
 
@@ -153,11 +148,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 # https://pypi.org/project/django-cors-headers/
 
-CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS").split(',')]
+CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"]
 
-CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_TRUSTED_ORIGINS").split(',')]
+CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"]
 
-CORS_ALLOW_CREDENTIALS = eval(os.getenv("CORS_ALLOW_CREDENTIALS"))
+CORS_ALLOW_CREDENTIALS = eval(os.environ["CORS_ALLOW_CREDENTIALS"])
 
 
 
@@ -170,12 +165,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_CACHE_CONTROL_MAX_AGE': int(
-        os.getenv('DEFAULT_CACHE_CONTROL_MAX_AGE')
-    ),
-    'DEFAULT_CACHE_CONTROL_PUBLIC': eval(
-        os.getenv('DEFAULT_CACHE_CONTROL_PUBLIC')
-    ),
+    'DEFAULT_CACHE_CONTROL_MAX_AGE': int(os.environ["DEFAULT_CACHE_CONTROL_MAX_AGE"]),
+    'DEFAULT_CACHE_CONTROL_PUBLIC': eval(os.environ["DEFAULT_CACHE_CONTROL_PUBLIC"]),
 }
 
 
@@ -185,24 +176,18 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": eval(
-        os.getenv('ROTATE_REFRESH_TOKENS')
-    ),
-    "BLACKLIST_AFTER_ROTATION": eval(
-        os.getenv('BLACKLIST_AFTER_ROTATION')
-    ),
-    "UPDATE_LAST_LOGIN": eval(
-        os.getenv('UPDATE_LAST_LOGIN')
-    ),
+    "ROTATE_REFRESH_TOKENS": eval(os.environ["ROTATE_REFRESH_TOKENS"]),
+    "BLACKLIST_AFTER_ROTATION": eval(os.environ["BLACKLIST_AFTER_ROTATION"]),
+    "UPDATE_LAST_LOGIN": eval(os.environ["UPDATE_LAST_LOGIN"]),
 
-    "ALGORITHM": os.getenv('ALGORITHM'),
-    "SIGNING_KEY": os.getenv("SECRET_KEY"),
-    "VERIFYING_KEY": os.getenv('VERIFYING_KEY'),
-    "AUDIENCE": eval(os.getenv('AUDIENCE')),
-    "ISSUER": eval(os.getenv('ISSUER')),
-    "JSON_ENCODER": eval(os.getenv('JSON_ENCODER')),
-    "JWK_URL": eval(os.getenv('JWK_URL')),
-    "LEEWAY": int(os.getenv('LEEWAY')),
+    "ALGORITHM": os.environ["ALGORITHM"],
+    "SIGNING_KEY": os.environ["SECRET_KEY"],
+    "VERIFYING_KEY": "",
+    "AUDIENCE": eval(os.environ["AUDIENCE"]),
+    "ISSUER": eval(os.environ["ISSUER"]),
+    "JSON_ENCODER": eval(os.environ["JSON_ENCODER"]),
+    "JWK_URL": eval(os.environ["JWK_URL"]),
+    "LEEWAY": int(os.environ["LEEWAY"]),
 
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
@@ -229,22 +214,22 @@ SIMPLE_JWT = {
 }
 
 SIMPLE_JWT.update({
-    'AUTH_COOKIE': os.getenv('COOKIE_NAME'),
+    'AUTH_COOKIE': os.environ["COOKIE_NAME"],
 })
 
 
 # Email backend configuration
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
 
-EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+EMAIL_PORT = int(os.environ["EMAIL_PORT"])
 
-EMAIL_USE_TLS = eval(os.getenv("EMAIL_USE_TLS"))
+EMAIL_USE_TLS = eval(os.environ["EMAIL_USE_TLS"])
 
-EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST = os.environ["EMAIL_HOST"]
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
 
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 
 
 # Django Rest Password Reset settings
@@ -257,34 +242,18 @@ DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 1
 # Manejo de archivos media
 MEDIA_URL = 'media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.environ['MEDIA_ROOT']
 
 
 # reCAPTCHA settings
-DRF_RECAPTCHA_SECRET_KEY = os.getenv('DRF_RECAPTCHA_SECRET_KEY')
+DRF_RECAPTCHA_SECRET_KEY = os.environ["DRF_RECAPTCHA_SECRET_KEY"]
 
 
 # More Django settings
-CSRF_COOKIE_SECURE = eval(
-    os.getenv('CSRF_COOKIE_SECURE')
-)
+SECURE_SSL_REDIRECT = eval(os.environ['SECURE_SSL_REDIRECT'])
 
-SESSION_COOKIE_SECURE = eval(
-    os.getenv('SESSION_COOKIE_SECURE')
-)
+SECURE_HSTS_SECONDS = int(os.environ['SECURE_HSTS_SECONDS'])
 
-SECURE_SSL_REDIRECT = eval(
-    os.getenv('SECURE_SSL_REDIRECT')
-)
+SECURE_HSTS_PRELOAD = eval(os.environ['SECURE_HSTS_PRELOAD'])
 
-SECURE_HSTS_SECONDS = int(
-    os.getenv('SECURE_HSTS_SECONDS')
-)
-
-SECURE_HSTS_PRELOAD = eval(
-    os.getenv('SECURE_HSTS_PRELOAD')
-)
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = eval(
-    os.getenv('SECURE_HSTS_INCLUDE_SUBDOMAINS')
-)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = eval(os.environ['SECURE_HSTS_INCLUDE_SUBDOMAINS'])
