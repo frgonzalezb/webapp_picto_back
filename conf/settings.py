@@ -148,9 +148,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 # https://pypi.org/project/django-cors-headers/
 
-CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(' ')
+CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"]
 
-CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(' ')
+CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"]
 
 CORS_ALLOW_CREDENTIALS = eval(os.environ["CORS_ALLOW_CREDENTIALS"])
 
