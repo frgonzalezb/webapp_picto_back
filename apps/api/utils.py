@@ -49,7 +49,6 @@ def get_used_storage(user_id):
     media_root = settings.MEDIA_ROOT
     user_folder = f'user_content/{user_id}/'
     storage_path = os.path.join(media_root, user_folder)
-    print(f'storage_path = {storage_path}')
     total_size = 0
 
     try:
