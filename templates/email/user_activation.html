@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activación de cuenta en PICTO</title>
   <style>
-    .container {
-      display: flex;
-      flex-direction: column !important;
+    body {
+      margin: 0;
+      padding: 0;
     }
 
-    .img {
-      display: flex;
-      align-content: center;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    .link {
-      font-weight: bold;
+    td {
+      padding: 10px;
     }
 
-    img {
-      margin: 10px;
-      max-width: 25%;
+    .img img {
+      max-width: 100%;
     }
 
     h2 {
@@ -30,36 +29,43 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="img">
-      <img src="{{ logo_url }}" alt="Logo de PICTO">
-    </div>
-    
-    <div class="content">
-      {% if user_name %}
-      <h2>¡Bienvenido(a) {{ user_name }} a PICTO!</h2>
-      {% else %}
-      <h2>¡Bienvenido(a) {{ user_email }} a PICTO!</h2>
-      {% endif %}
-
-      <br><br>
-
-      <p>Hemos llegado al último paso de tu registro.</p>
-      <p>Por favor, haz clic en el link debajo para activar tu cuenta:</p>
-
-      <br><br>
-
-      <p class="link"><a href="{{ activation_url }}">Activar Cuenta</a></p>
-
-      <br><br>
-
-      <p>Esperamos que tengas una excelente experiencia de usuario en PICTO.</p>
-
-      <br><br>
-
-      <p>Atentamente,</p>
-      <p>El equipo de PICTO.</p>
-    </div>
-  </div>
+  <table>
+    <tr>
+      <td class="img" style="text-align: center;">
+        <img src="{{ logo_url }}" alt="Logo de PICTO">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% if user_name %}
+        <h2>¡Bienvenido(a) {{ user_name }} a PICTO!</h2>
+        {% else %}
+        <h2>¡Bienvenido(a) {{ user_email }} a PICTO!</h2>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Hemos llegado al último paso de tu registro.</p>
+        <p>Por favor, haz clic en el link debajo para activar tu cuenta:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">
+        <p class="link" style="font-weight: bold;"><a href="{{ activation_url }}">Activar Cuenta</a></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Esperamos que tengas una excelente experiencia de usuario en PICTO.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Atentamente,</p>
+        <p>El equipo de PICTO.</p>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>

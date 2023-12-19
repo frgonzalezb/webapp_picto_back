@@ -31,12 +31,13 @@ def send_activation_email(user, token):
         'user_name': user.name,
         'user_email': user.email,
         'contact_email': contact_email,
-        'activation_url': "{}?token={}".format(
+        'activation_url': "{}{}".format(
             base_url + endpoint, 
             token
         ),
         'logo_url': logo_url
     }
+    print(f'context = {context}')
 
     email_html_message = render_to_string(
         'email/user_activation.html', 
@@ -85,7 +86,7 @@ def password_reset_token_created(
         'current_user': reset_password_token.user,
         'user_name': reset_password_token.user.name,
         'email': reset_password_token.user.email,
-        'reset_password_url': "{}?token={}".format(
+        'reset_password_url': "{}{}".format(
             instance.request.build_absolute_uri(base_url + endpoint),
             reset_password_token.key
         ),
