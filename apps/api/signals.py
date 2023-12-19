@@ -37,7 +37,7 @@ def send_activation_email(user, token):
         ),
         'logo_url': logo_url
     }
-    print(f'activation_url = {context.activation_url}')
+    print(f'activation_url = {context['activation_url']}')
 
     email_html_message = render_to_string(
         'email/user_activation.html', 
