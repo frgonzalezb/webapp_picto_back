@@ -41,11 +41,11 @@ def verify_email_complexity(value):
 
 def verify_password_complexity(value):
     password_regex = re.compile(
-        r'^(?=.*[a-z])'             # al menos una minúscula
-        r'(?=.*[A-Z])'              # al menos una mayúscula
-        r'(?=.*\d)'                 # al menos un dígito
-        r'(?=.*[-_\/@$!%*?&])'      # al menos un carácter especial
-        r'[A-Za-z\d\-_\/@$!%*?&]'   # caracteres permitidos
+        r'^(?=.*[a-z])'                 # al menos una minúscula
+        r'(?=.*[A-Z])'                  # al menos una mayúscula
+        r'(?=.*\d)'                     # al menos un dígito
+        r'(?=.*[-_\/@$!%*?&.,:;])'      # al menos un carácter especial
+        r'[A-Za-z\d\-_\/@$!%*?&.,:;]'   # caracteres permitidos
     )
 
     if not password_regex.match(value):
